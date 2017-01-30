@@ -25,14 +25,14 @@ $player_on_goal = false
 $num = 0
 $level_finished = true
 
-current_level = File.readlines "levels/level1.xsb"
+current_level = File.readlines "levels/level8.xsb"
 $level_map = current_level
 
 #Determine position of player on level
 def player_pos(level)
   for i in 0..level.length-1
     for j in 0..level[i].length-1
-      if level[i][j]=='@'
+      if level[i][j] == '@' || level[i][j] == '+'
         return i,j
       end
     end
