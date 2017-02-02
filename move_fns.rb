@@ -51,13 +51,8 @@ def move_up(level)
   end
 
   clear_screen
-  if game_won == false
-    check_status(level)
-    play(level)
-  else
-    clear_screen
-    puts("Congratulations, you have completed all levels successfully!")
-  end
+  check_status(level)
+  play(level)
 end
 
 def move_down(level)
@@ -111,13 +106,8 @@ def move_down(level)
   end
 
   clear_screen
-  if game_won == false
-    check_status(level)
-    play(level)
-  else
-    clear_screen
-    puts("Congratulations, you have completed all levels successfully!")
-  end
+  check_status(level)
+  play(level)
 end
 
 
@@ -172,13 +162,8 @@ def move_left(level)
   end
 
   clear_screen
-  if game_won == false
-    check_status(level)
-    play(level)
-  else
-    clear_screen
-    puts("Congratulations, you have completed all levels successfully!")
-  end
+  check_status(level)
+  play(level)
 end
 
 
@@ -233,11 +218,6 @@ def move_right(level)
   end
 
   clear_screen
-  if game_won == false
-    check_status(level)
-    play(level)
-  else
-    clear_screen
-    puts("Congratulations, you have completed all levels successfully!")
-  end
+  check_status(level)
+  play(level)
 end

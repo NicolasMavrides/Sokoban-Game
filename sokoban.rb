@@ -70,20 +70,15 @@ def check_status(level)
       end
     end
   end
-
-  if crate_count != 0
+  if crate_count == 0
     $level_num += 1
+    if $level_num > 90
+      puts("Congratulations, you have successfully completed all the levels!!")
+      exit
+    else
     $current_level = File.readlines "levels/level#{$level_num}.xsb"
     clear_screen
-    #play($current_level)
-  end
-end
-
-def game_won
-  if $level_num > 90
-    return true
-  else
-    return false
+    end
   end
 end
 
@@ -95,11 +90,11 @@ end
 
 #play the level
 def play(level)
-    puts("Welcome to Level #{$level_num}! Push all crates to the goal spaces.")
-    puts(" ")
-    puts(level)
-    get_input
-    movement
+  puts("Welcome to Level #{$level_num}! Push all crates to the goal spaces.")
+  puts(" ")
+  puts(level)
+  get_input
+  movement
 end
 
 
