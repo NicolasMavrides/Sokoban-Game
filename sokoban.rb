@@ -8,6 +8,7 @@ def get_input
 $input = STDIN.getch
 end
 
+
 def splash_screen
 intro = ConsoleSplash.new(10, 50)
 intro.write_header("SOKOBAN GAME", "Nicolas Mavrides", "1", {:nameFg=>:red, :authorFg=>:red, :versionFg=>:yellow, :nameBg=>:yellow})
@@ -19,14 +20,14 @@ puts " "
 get_input
 end
 
+
 #Game variables
 $won = false
 $player_on_goal = false
-$num = 0
-$level_finished = true
+$level_num = 1
+$current_level = File.readlines "levels/level#{$level_num}.xsb"
+$game_complete = false
 
-current_level = File.readlines "levels/level8.xsb"
-$level_map = current_level
 
 #Determine position of player on level
 def player_pos(level)
@@ -39,38 +40,75 @@ def player_pos(level)
   end
 end
 
+
 def movement
   if $input == "w"
-    move_up($level_map)
+    move_up($current_level)
   elsif $input == "s"
-    move_down($level_map)
+    move_down($current_level)
   elsif $input == "a"
-    move_left($level_map)
+    move_left($current_level)
   elsif $input == "d"
-    move_right($level_map)
+    move_right($current_level)
   elsif $input=='q'
     exit
   elsif $input=='r'
+    clear_screen
+    $current_level = File.readlines "levels/level#{$level_num}.xsb"
+    play($current_level)
   end
 end
 
-#clear screen method
+
+#check whether to advance to next level
+def check_status(level)
+  crate_count = 0
+  for i in 0..level.length-1
+    for j in 0..level[i].length-1
+      if level[i][j] == '$'
+        crate_count += 1
+      end
+    end
+  end
+
+  if crate_count != 0
+    $level_num += 1
+    $current_level = File.readlines "levels/level#{$level_num}.xsb"
+    clear_screen
+    #play($current_level)
+  end
+end
+
+def game_won
+  if $level_num > 90
+    return true
+  else
+    return false
+  end
+end
+
+#clear screen method. Uses 2 clear fns to cover a range of operating systems
 def clear_screen
   system('clear')
   system('cls')
 end
 
-def play
-puts($level_map)
-get_input
-movement
+#play the level
+def play(level)
+    puts("Welcome to Level #{$level_num}! Push all crates to the goal spaces.")
+    puts(" ")
+    puts(level)
+    get_input
+    movement
 end
 
+
+#begin the game
 def start
   splash_screen
   if $input == 's'
    clear_screen
-   play
+   play($current_level)
   end
 end
 

@@ -13,24 +13,33 @@ def move_up(level)
       level[x-1][y] = '@'
     end
 
-  elsif level[x-1][y] == '$' && level[x-2][y] == ' '
-    level[x][y] = ' '
-    level[x-1][y] = '@'
-    level[x-2][y] = '$'
-
-  elsif level[x-1][y] == '$' && level[x-2][y] == '.'
-    level[x][y] = ' '
-    level[x-1][y] = '@'
-    level[x-2][y] = '*'
-
-  elsif level[x-1][y] == '*' && level[x-2][y] == '.'
-    if level[x][y] == '@'
+  elsif level[x-1][y] == '$'
+    if level[x-2][y] == ' '
+      level[x-2][y] = '$'
+      level[x-1][y] = '@'
+      if level[x][y] == '@'
+        level[x][y] = ' '
+      elsif level[x][y] == '+'
+        level[x][y] = '.'
+      end
+    elsif level[x-2][y] == '.'
+      level[x-2][y] = '*'
+      level[x-1][y] = '@'
       level[x][y] = ' '
-    elsif level[x][y] == '+'
+    end
+
+  elsif level[x-1][y] == '*' && level[x-2][y] != '#' && level[x-2][y] != '*'
+    if level[x][y] == '+'
       level[x][y] = '.'
+    elsif level[x][y] == '@'
+      level[x][y] = ' '
+    end
+    if level[x-2][y] == ' '
+      level[x-2][y] = '$'
+    elsif level[x-2][y] == '.'
+      level[x-2][y] = '*'
     end
     level[x-1][y] = '+'
-    level[x-2][y] = '*'
 
   elsif level[x-1][y] == '.'
     if level[x][y] == '@'
@@ -40,10 +49,16 @@ def move_up(level)
     end
     level[x-1][y] = '+'
   end
-  clear_screen
-  play
-end
 
+  clear_screen
+  if game_won == false
+    check_status(level)
+    play(level)
+  else
+    clear_screen
+    puts("Congratulations, you have completed all levels successfully!")
+  end
+end
 
 def move_down(level)
   x = player_pos(level)[0]
@@ -58,24 +73,33 @@ def move_down(level)
       level[x+1][y] = '@'
     end
 
-  elsif level[x+1][y] == '$' && level[x+2][y] == ' '
-    level[x][y] = ' '
-    level[x+1][y] = '@'
-    level[x+2][y] = '$'
-
-  elsif level[x+1][y] == '$' && level[x+2][y] == '.'
-    level[x][y] = ' '
-    level[x+1][y] = '@'
-    level[x+2][y] = '*'
-
-  elsif level[x+1][y] == '*' && level[x+2][y] == '.'
-    if level[x][y] == '@'
+  elsif level[x+1][y] == '$'
+    if level[x+2][y] == ' '
+      level[x+2][y] = '$'
+      level[x+1][y] = '@'
+      if level[x][y] == '@'
+        level[x][y] = ' '
+      elsif level[x][y] == '+'
+        level[x][y] = '.'
+      end
+    elsif level[x+2][y] == '.'
+      level[x+2][y] = '*'
+      level[x+1][y] = '@'
       level[x][y] = ' '
-    elsif level[x][y] == '+'
+    end
+
+  elsif level[x+1][y] == '*' && level[x+2][y] != '#' && level[x+2][y] != '*'
+    if level[x][y] == '+'
       level[x][y] = '.'
+    elsif level[x][y] == '@'
+      level[x][y] = ' '
+    end
+    if level[x+2][y] == ' '
+      level[x+2][y] = '$'
+    elsif level[x+2][y] == '.'
+      level[x+2][y] = '*'
     end
     level[x+1][y] = '+'
-    level[x+2][y] = '*'
 
   elsif level[x+1][y] == '.'
     if level[x][y] == '@'
@@ -87,7 +111,13 @@ def move_down(level)
   end
 
   clear_screen
-  play
+  if game_won == false
+    check_status(level)
+    play(level)
+  else
+    clear_screen
+    puts("Congratulations, you have completed all levels successfully!")
+  end
 end
 
 
@@ -104,24 +134,33 @@ def move_left(level)
       level[x][y-1] = '@'
     end
 
-  elsif level[x][y-1] == '$' && level[x][y-2] == ' '
-    level[x][y] = ' '
-    level[x][y-1] = '@'
-    level[x][y-2] = '$'
-
-  elsif level[x][y-1] == '$' && level[x][y-2] == '.'
-    level[x][y] = ' '
-    level[x][y-1] = '@'
-    level[x][y-2] = '*'
-
-  elsif level[x][y-1] == '*' && level[x][y-2] == '.'
-    if level[x][y] == '@'
+  elsif level[x][y-1] == '$'
+    if level[x][y-2] == ' '
+      level[x][y-2] = '$'
+      level[x][y-1] = '@'
+      if level[x][y] == '@'
+        level[x][y] = ' '
+      elsif level[x][y] == '+'
+        level[x][y] = '.'
+      end
+      elsif level[x][y-2] == '.'
+      level[x][y-2] = '*'
+      level[x][y-1] = '@'
       level[x][y] = ' '
-    elsif level[x][y] == '+'
+    end
+
+  elsif level[x][y-1] == '*' && level[x][y-2] != '#' && level[x][y-2] != '*'
+    if level[x][y] == '+'
       level[x][y] = '.'
+    elsif level[x][y] == '@'
+      level[x][y] = ' '
+    end
+    if level[x][y-2] == ' '
+      level[x][y-2] = '$'
+    elsif level[x][y-2] == '.'
+      level[x][y-2] = '*'
     end
     level[x][y-1] = '+'
-    level[x][y-2] = '*'
 
   elsif level[x][y-1] == '.'
     if level[x][y] == '@'
@@ -133,7 +172,13 @@ def move_left(level)
   end
 
   clear_screen
-  play
+  if game_won == false
+    check_status(level)
+    play(level)
+  else
+    clear_screen
+    puts("Congratulations, you have completed all levels successfully!")
+  end
 end
 
 
@@ -150,24 +195,33 @@ def move_right(level)
       level[x][y+1] = '@'
     end
 
-  elsif level[x][y+1] == '$' && level[x][y+2] == ' '
-    level[x][y] = ' '
-    level[x][y+1] = '@'
-    level[x][y+2] = '$'
-
-  elsif level[x][y+1] == '$' && level[x][y+2] == '.'
-    level[x][y] = ' '
-    level[x][y+1] = '@'
-    level[x][y+2] = '*'
-
-  elsif level[x][y+1] == '*' && level[x][y+2] == '.'
-    if level[x][y] == '@'
+  elsif level[x][y+1] == '$'
+    if level[x][y+2] == ' '
+      level[x][y+2] = '$'
+      level[x][y+1] = '@'
+      if level[x][y] == '@'
+        level[x][y] = ' '
+      elsif level[x][y] == '+'
+        level[x][y] = '.'
+      end
+    elsif level[x][y+2] == '.'
+      level[x][y+2] = '*'
+      level[x][y+1] = '@'
       level[x][y] = ' '
-    elsif level[x][y] == '+'
+    end
+
+  elsif level[x][y+1] == '*' && level[x][y+2] != '#' && level[x][y+2] != '*'
+    if level[x][y] == '+'
       level[x][y] = '.'
+    elsif level[x][y] == '@'
+      level[x][y] = ' '
+    end
+    if level[x][y+2] == ' '
+      level[x][y+2] = '$'
+    elsif level[x][y+2] == '.'
+      level[x][y+2] = '*'
     end
     level[x][y+1] = '+'
-    level[x][y+2] = '*'
 
   elsif level[x][y+1] == '.'
     if level[x][y] == '@'
@@ -179,5 +233,11 @@ def move_right(level)
   end
 
   clear_screen
-  play
+  if game_won == false
+    check_status(level)
+    play(level)
+  else
+    clear_screen
+    puts("Congratulations, you have completed all levels successfully!")
+  end
 end
