@@ -1,0 +1,13 @@
+development:
+  adapter: postgresql
+  database: test-project-2_dev
+  host: localhost
+  min_messages: warning
+  username:
+
+test:
+  adapter: postgresql
+  database: test-project-2_test
+  host: localhost
+  min_messages: warning
+  username:
